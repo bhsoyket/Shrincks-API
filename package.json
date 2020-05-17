@@ -1,0 +1,28 @@
+{
+  "name": "Shrincks-API",
+  "version": "1.0.0",
+  "description": "University Project APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoyketHM/Shrincks-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SoyketHM/Shrincks-API/issues"
+  },
+  "homepage": "https://github.com/SoyketHM/Shrincks-API#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.4.1",
+    "moment": "^2.25.3",
+    "mongoose": "^5.9.14"
+  }
+}

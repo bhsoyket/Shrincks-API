@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  shrincks-api-nodejs-app:
+    build: .
+    env_file:
+      - ./.env
+    volumes:
+      - './src:/opt/app/src'
+    ports:
+      - '${PORT}:${PORT}'
+      - '${DEBUGGER_PORT}:${DEBUGGER_PORT}'
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - nc
+        - '-z'
+        - localhost
+        - '3080'
+      interval: 20s
+      timeout: 5s
+      retries: 3
+    command: nodemon src/index.js
+volumes:
+  database_vol: null
+networks:
+  default:
+    external:
+      name: shrincks-network
