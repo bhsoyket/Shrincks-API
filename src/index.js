@@ -5,6 +5,7 @@ const routes       = require('./routes');
 // const auth         = require('./middlewares/auth');
 // const errorHandler = require('./middlewares/errors');
 const cors		   = require('cors');
+const colors		   = require('colors');
 
 // Load Middlewares
 app.use(express.json());
@@ -22,7 +23,7 @@ const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
     //debugger;
-    console.log(`server listening on ${PORT}...`);
+    console.log(`server listening on ${PORT}...`.bgGreen.black);
 });
 
 module.exports = app;
