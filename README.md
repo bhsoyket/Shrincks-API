@@ -15,5 +15,5 @@ The development version of the application runs `nodemon`. Every time you make a
 ### Stack and Tools:
 
 * NodeJS
-* Redis
+* expressJS
 * MongoDB
