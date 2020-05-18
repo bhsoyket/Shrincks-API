@@ -21,17 +21,10 @@ const wasteCategoriesSchema = new Schema({
         type: String,
         trim: true
     },
-    items: {
-        type: [
-            {
-                id: {
-                    type: objectID,
-                    ref: 'WasteItems'
-                }
-            }
-        ],
-        default: []
-    },
+    items: [{
+        type: objectID,
+        ref: 'WasteItems'
+    }],
     deletedAt: {
         type: Date,
         required: false
