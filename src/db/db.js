@@ -1,27 +1,20 @@
 const mongoose = require('mongoose');
 const _log     = require('../utils/logger');
-const conf     = require('../configs/common.json');
-const cache    = require('mongoose-cachebox');
+require('dotenv').config();
+// const conf     = require('../configs/common.json');
+// const cache    = require('mongoose-cachebox');
 
-const _options = {
-	ttl   : parseInt(conf.database.cache_ttl),
-	cache : true
-};
+// const _options = {
+// 	ttl   : parseInt(conf.database.cache_ttl),
+// 	cache : true
+// };
 
-cache(mongoose,_options);
+// cache(mongoose,_options);
 
 let dbUrl = '';
 
-if (process.env.NODE_ENV === "production") {
-	dbUrl = process.env.MONGODB_URI;
-}
-
-if (process.env.NODE_ENV === "test") {
-	dbUrl = process.env.MONGODB_TEST_URI;
-}
-
 if (process.env.NODE_ENV === "development") {
-	dbUrl = process.env.MONGODB_DEV_URI;
+	dbUrl = process.env.MONGODB_URI;
 }
 
 if(!dbUrl) {
@@ -35,7 +28,5 @@ mongoose.connect(dbUrl, { useNewUrlParser: true, useFindAndModify: false, useCre
 		_log(`Connected to DB server. ( ${process.env.NODE_ENV} )`, 'green');
 	}
 });
-
-//Cache
 
 module.exports = mongoose;
