@@ -6,7 +6,7 @@ mongoose.Promise 	= global.Promise;
 const wasteCategoriesSchema = new Schema({
     categoryId: {
 		type: String,
-		required: true
+		unique: true
 	},
     name: {
         type: String,
@@ -24,11 +24,7 @@ const wasteCategoriesSchema = new Schema({
     items: [{
         type: objectID,
         ref: 'WasteItems'
-    }],
-    deletedAt: {
-        type: Date,
-        required: false
-    }
+    }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('WasteCategories', wasteCategoriesSchema);
