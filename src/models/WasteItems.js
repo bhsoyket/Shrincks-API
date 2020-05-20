@@ -25,13 +25,9 @@ const WasteItemsSchema = new Schema({
         type: String,
         trim: true
     },
-    categoryId: {
+    category: {
         type: objectID,
         ref: 'WasteCategories'
-    },
-    deletedAt: {
-        type: Date,
-        required: false
     }
 }, { timestamps: true });
 
