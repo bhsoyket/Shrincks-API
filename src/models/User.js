@@ -13,19 +13,16 @@ const userSchema = new Schema({
 	},
 	email: {
 		type: String,
-		required: 'Please enter a user email',
 		trim: true,
-		unique: true,
 		lowercase: true
 	},
 	password: {
 		type: String,
-		required: 'Please enter a user password',
 		trim: true
 	},
 	status: {
-		type: Boolean,
-		required: true
+		type: String,
+		default: 'active'
 	}
 }, { timestamps: true });
 

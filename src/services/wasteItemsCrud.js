@@ -2,9 +2,9 @@ const WasteItems 	= require('../models/WasteItems');
 const _p 		    = require('../helpers/simpleasync');
 
 //create item
-module.exports.createItem = async categoryInfo => {    
+module.exports.createItem = async itemInfo => {    
 	return new Promise(async (resolve, reject) => {
-		const [error, saveItemInfo] = await _p(WasteItems.create(categoryInfo));
+		const [error, saveItemInfo] = await _p(WasteItems.create(itemInfo));
 
 		if (!error) {
 			return resolve(saveItemInfo);
@@ -23,14 +23,14 @@ module.exports.getItems = async query => {
 
 		if(query.page) delete query.page;
 
-		const [error, categories] = await _p(WasteItems.find( query )
+		const [error, items] = await _p(WasteItems.find( query )
 			.populate({path: 'category', options: {sort: {name: 'asc'}}})
 			.limit(Limit)
 			.skip(skip)
 			.sort({createdAt: 'desc'}));
 
 		if(!error) {
-			return resolve(categories);
+			return resolve(items);
 		} else {
 			return reject(error.message);
 		}
@@ -52,9 +52,9 @@ module.exports.getItemById = async id => {
 };
 
 //update item by item id
-module.exports.updateItemById = async (id, categoryInfo) => {
+module.exports.updateItemById = async (id, itemInfo) => {
 	return new Promise(async (resolve, reject) => {
-		const [error, updateItemInfo] = await _p(WasteItems.findOneAndUpdate({ _id: id }, categoryInfo, { new: true	}));
+		const [error, updateItemInfo] = await _p(WasteItems.findOneAndUpdate({ _id: id }, itemInfo, { new: true	}));
 
 		if (!error) {
 			return resolve(updateItemInfo);
