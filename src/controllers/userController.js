@@ -4,7 +4,7 @@ const _p       				= require('../helpers/simpleasync');
 const { createResponse }    = require('../utils/responseGenerate');
 const jwt           		= require('../helpers/jwt');
 
-//create user
+//create user: 
 module.exports.createUser = async (req, res,next) => {
 	const [error,user] = await _p(userCrud.createUser(req.body));
 
