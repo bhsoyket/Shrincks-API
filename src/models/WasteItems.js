@@ -1,4 +1,4 @@
-const mongoose 		= require('mongoose'); //const db = require('../db/db');
+const mongoose 		= require('mongoose');
 const { Schema } 	= mongoose;
 const objectID      = Schema.ObjectId;
 mongoose.Promise 	= global.Promise;
