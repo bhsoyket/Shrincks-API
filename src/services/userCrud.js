@@ -65,10 +65,21 @@ module.exports.updateUserById = async (id, userInfo) => {
 //login user
 module.exports.loginUser = async id => {
 	return new Promise(async (resolve, reject) => {
-		const [error, user] = await _p(User.findOne({ userId: id }));
+		const [error, user] = await _p(User.find({ userId: id }));
+		
+		console.log([error, user]);
 
 		if(!error) {
-			return resolve(user);
+			if(Object.keys(user).length > 0) {
+				return resolve(user);
+			}
+			
+			const [error, saveUserInfo] = await _p(User.create({ userId: id }));
+			if (!error) {
+				return resolve(saveUserInfo);
+			} else {
+				return reject(error.message);
+			}
 		} else {
 			return reject(error.message);
 		}
