@@ -65,7 +65,7 @@ module.exports.updateUserById = async (id, userInfo) => {
 //login user
 module.exports.loginUser = async id => {
 	return new Promise(async (resolve, reject) => {
-		const [error, user] = await _p(User.find({ userId: id }));
+		const [error, user] = await _p(User.findOne({ userId: id }));
 		
 		console.log([error, user]);
 
