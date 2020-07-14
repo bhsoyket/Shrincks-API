@@ -2,7 +2,6 @@ module.exports.createResponse = (data, message = null, error = false, token = nu
 	return {
 		error,
 		data,
-		message,
-		token
+		message
 	};
 };
