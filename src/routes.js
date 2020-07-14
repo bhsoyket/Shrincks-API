@@ -3,10 +3,12 @@ const health				=	require('./controllers/health');
 const categoryController	=	require('./controllers/wasteCategoriesController');
 const itemsController	    =	require('./controllers/wasteItemsController');
 const userController	    =	require('./controllers/userController');
+const areaController	    =	require('./controllers/areaController');
 
 const categoryValidator		=	require('./middlewares/wasteCategoriesValidator');
 const itemValidator		    =	require('./middlewares/wasteItemsValidator');
 const userValidator		    =	require('./middlewares/userValidator');
+const areaValidator		    =	require('./middlewares/areaValidator');
 const { checkInvalid }		=	require('./middlewares/validationReject');
 
 // System Routes
@@ -31,6 +33,12 @@ router.post('/api/item', itemValidator.itemValidator, checkInvalid, itemsControl
 router.get('/api/item', itemsController.getItems);
 router.get('/api/item/:id', itemsController.getItemById);
 router.put('/api/item/:id', itemsController.updateItemById);
+
+// Area Routes
+router.post('/api/area', areaValidator.areaValidator, checkInvalid, areaController.createArea);
+router.get('/api/area', areaController.getAreas);
+router.get('/api/area/:id', areaController.getAreaById);
+router.put('/api/area/:id', areaController.updateAreaById);
 
 router.post('/detect', itemsController.objectDetect);
 
