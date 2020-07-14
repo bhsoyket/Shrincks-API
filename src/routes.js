@@ -32,4 +32,6 @@ router.get('/api/item', itemsController.getItems);
 router.get('/api/item/:id', itemsController.getItemById);
 router.put('/api/item/:id', itemsController.updateItemById);
 
+router.post('/detect', itemsController.objectDetect);
+
 module.exports = router;

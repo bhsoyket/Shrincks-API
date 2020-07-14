@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/SoyketHM/Shrincks-API#readme",
   "dependencies": {
+    "@tensorflow-models/coco-ssd": "^2.0.3",
+    "@tensorflow/tfjs": "^2.0.0",
+    "@tensorflow/tfjs-node": "^2.0.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
