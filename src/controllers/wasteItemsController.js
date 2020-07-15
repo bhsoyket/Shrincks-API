@@ -1,11 +1,11 @@
-const itemCrud = require("../services/wasteItemsCrud");
-const categoryCrud = require("../services/wasteCategoriesCrud");
-const colors = require("colors");
-const _p = require("../helpers/simpleasync");
+const itemCrud 			 = require("../services/wasteItemsCrud");
+const categoryCrud 		 = require("../services/wasteCategoriesCrud");
+const colors 			 = require("colors");
+const _p 				 = require("../helpers/simpleasync");
 const { createResponse } = require("../utils/responseGenerate");
-const tf = require('@tensorflow/tfjs');
+const tf				 = require('@tensorflow/tfjs');
+const cocoSsd			 = require("@tensorflow-models/coco-ssd");
 require('@tensorflow/tfjs-node');
-const cocoSsd = require("@tensorflow-models/coco-ssd");
 
 //create item
 module.exports.createItem = async (req, res, next) => {
@@ -74,16 +74,18 @@ module.exports.updateItemById = async (req, res, next) => {
 //update item by item id
 module.exports.objectDetect = async (req, res) => {
 	
-	const img = req.body.image;
-	console.log(img);
+	const img = req.file.originalname;
+	console.log(img.red);
 
 	// Load the model.
 	const model = await cocoSsd.load();
+	console.log("====================");
+	
 
 	// Classify the image.
+	console.log("Predictions: ".blue);
 	const predictions = await model.detect(img);
 
-	console.log("Predictions: ");
 	console.log(predictions);
 
 	// let [error,item] = await _p(itemCrud.updateItemById(req.params.id, req.body));
