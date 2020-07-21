@@ -19,9 +19,12 @@
     "url": "https://github.com/SoyketHM/Shrincks-API/issues"
   },
   "homepage": "https://github.com/SoyketHM/Shrincks-API#readme",
+  "peerDependencies": {},
   "dependencies": {
     "@tensorflow-models/coco-ssd": "^2.0.3",
     "@tensorflow/tfjs": "^2.0.0",
+    "@tensorflow/tfjs-backend-cpu": "^2.0.1",
+    "@tensorflow/tfjs-backend-webgl": "^2.0.0",
     "@tensorflow/tfjs-node": "^2.0.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",

@@ -4,8 +4,10 @@ const colors 			 = require("colors");
 const _p 				 = require("../helpers/simpleasync");
 const { createResponse } = require("../utils/responseGenerate");
 const tf				 = require('@tensorflow/tfjs');
-const cocoSsd			 = require("@tensorflow-models/coco-ssd");
 require('@tensorflow/tfjs-node');
+require('@tensorflow/tfjs-backend-cpu');
+require('@tensorflow/tfjs-backend-webgl');
+const cocoSsd			 = require("@tensorflow-models/coco-ssd");
 
 //create item
 module.exports.createItem = async (req, res, next) => {
@@ -71,31 +73,54 @@ module.exports.updateItemById = async (req, res, next) => {
 		.json(createResponse(item, "item updated successfully"));
 };
 
-//update item by item id
-module.exports.objectDetect = async (req, res) => {
+//detect objects form image
+module.exports.objectDetect = async (req, res, next) => {
 	
 	const img = req.file.originalname;
 	console.log(img.red);
 
-	// Load the model.
-	const model = await cocoSsd.load();
-	console.log("====================");
-	
+	let model;	
 
 	// Classify the image.
-	console.log("Predictions: ".blue);
-	const predictions = await model.detect(img);
+	if (!model) {
+		let [error, loadModel] = await _p(
+			// Load the model.
+			cocoSsd.load()
+		);
+		if (loadModel){
+			model = loadModel;
+			console.log("Predictions: ".blue);
 
-	console.log(predictions);
+			let [err, predictions] = await _p(
+				model.detect(img)
+			);
+			if (predictions) {
+				console.log(predictions);
+				return res.status(200).json(createResponse(predictions, 'Image detection successfully'));
+			}
+			if (err) {
+				console.log(err.red);
+				return next(new Error("Image detection failed"));
+			}
+		}
+		if (error) {
+			console.log(error.red);
+			return next(new Error("Model load failed"));
+		}
+		
+	}else{
+		console.log("Predictions: ".green);
 
-	// let [error,item] = await _p(itemCrud.updateItemById(req.params.id, req.body));
-
-	// if(error) {
-	// 	console.log(error.red);
-	// 	return next(new Error('item access error'));
-	// }
-	// if(!item) {
-	// 	return res.status(200).json(createResponse(null, 'item not found'));
-	// }
-	// return res.status(200).json(createResponse(item, 'item updated successfully'));
+		let [err, predictions] = await _p(
+			model.detect(img)
+		);
+		if (predictions) {
+			console.log(predictions);
+			return res.status(200).json(createResponse(predictions, 'Image detection successfully'));
+		}
+		if (err) {
+			console.log(error.red);
+			return next(new Error("Image detection failed"));
+		}
+	}
 };
