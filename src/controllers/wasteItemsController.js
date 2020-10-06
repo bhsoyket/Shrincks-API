@@ -3,11 +3,6 @@ const categoryCrud 		 = require("../services/wasteCategoriesCrud");
 const colors 			 = require("colors");
 const _p 				 = require("../helpers/simpleasync");
 const { createResponse } = require("../utils/responseGenerate");
-const tf				 = require('@tensorflow/tfjs');
-require('@tensorflow/tfjs-node');
-require('@tensorflow/tfjs-backend-cpu');
-require('@tensorflow/tfjs-backend-webgl');
-const cocoSsd			 = require("@tensorflow-models/coco-ssd");
 
 //create item
 module.exports.createItem = async (req, res, next) => {
@@ -73,54 +68,4 @@ module.exports.updateItemById = async (req, res, next) => {
 		.json(createResponse(item, "item updated successfully"));
 };
 
-//detect objects form image
-module.exports.objectDetect = async (req, res, next) => {
-	
-	const img = req.file.originalname;
-	console.log(img.red);
 
-	let model;	
-
-	// Classify the image.
-	if (!model) {
-		let [error, loadModel] = await _p(
-			// Load the model.
-			cocoSsd.load()
-		);
-		if (loadModel){
-			model = loadModel;
-			console.log("Predictions: ".blue);
-
-			let [err, predictions] = await _p(
-				model.detect(img)
-			);
-			if (predictions) {
-				console.log(predictions);
-				return res.status(200).json(createResponse(predictions, 'Image detection successfully'));
-			}
-			if (err) {
-				console.log(err.red);
-				return next(new Error("Image detection failed"));
-			}
-		}
-		if (error) {
-			console.log(error.red);
-			return next(new Error("Model load failed"));
-		}
-		
-	}else{
-		console.log("Predictions: ".green);
-
-		let [err, predictions] = await _p(
-			model.detect(img)
-		);
-		if (predictions) {
-			console.log(predictions);
-			return res.status(200).json(createResponse(predictions, 'Image detection successfully'));
-		}
-		if (err) {
-			console.log(error.red);
-			return next(new Error("Image detection failed"));
-		}
-	}
-};

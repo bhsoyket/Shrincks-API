@@ -6,6 +6,7 @@ const categoryController	=	require('./controllers/wasteCategoriesController');
 const itemsController	    =	require('./controllers/wasteItemsController');
 const userController	    =	require('./controllers/userController');
 const areaController	    =	require('./controllers/areaController');
+const geojsonController	    =	require('./controllers/geojsonController');
 
 const categoryValidator		=	require('./middlewares/wasteCategoriesValidator');
 const itemValidator		    =	require('./middlewares/wasteItemsValidator');
@@ -42,6 +43,6 @@ router.get('/api/area', areaController.getAreas);
 router.get('/api/area/:id', areaController.getAreaById);
 router.put('/api/area/:id', areaController.updateAreaById);
 
-router.post('/api/detect', upload.single('image'), itemsController.objectDetect);
+router.get('/update-geojson', geojsonController.updateGeojson);
 
 module.exports = router;
