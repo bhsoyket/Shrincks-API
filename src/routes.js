@@ -1,6 +1,5 @@
 const router				=	require('express').Router();
 const multer                =   require('multer');
-const upload                =   multer({ dest: 'uploads/' })
 const health				=	require('./controllers/health');
 const categoryController	=	require('./controllers/wasteCategoriesController');
 const itemsController	    =	require('./controllers/wasteItemsController');
@@ -43,6 +42,6 @@ router.get('/api/area', areaController.getAreas);
 router.get('/api/area/:id', areaController.getAreaById);
 router.put('/api/area/:id', areaController.updateAreaById);
 
-router.get('/update-geojson', geojsonController.updateGeojson);
+router.post('/update-geojson', geojsonController.updateGeojson);
 
 module.exports = router;
