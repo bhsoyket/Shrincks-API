@@ -16,13 +16,14 @@ module.exports.createUser = async (req, res,next) => {
 	if (user) {
 		const payload = {
 			id: user.userId,
+			name: user.name,
 			status: user.status,
 			exp: Math.floor(Date.now() / 100) + (60 * 60)
 		};
 		token = await jwt.encode(payload);
 	}
 	
-	return res.status(200).json(createResponse({token}, 'user created successfully'));
+	return res.status(200).json(createResponse({token, ...user}, 'user created successfully'));
 };
 
 //get all categories || can use query string
@@ -83,5 +84,5 @@ module.exports.loginUser = async (req, res,next) => {
 		token = await jwt.encode(payload);
 	}
 	
-	return res.status(200).json(createResponse({token}, 'user login successfully'));
+	return res.status(200).json(createResponse({token, ...user}, 'user login successfully'));
 };
