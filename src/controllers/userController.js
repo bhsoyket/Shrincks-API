@@ -23,7 +23,7 @@ module.exports.createUser = async (req, res,next) => {
 		token = await jwt.encode(payload);
 	}
 	
-	return res.status(200).json(createResponse({token, ...user}, 'user created successfully'));
+	return res.status(200).json(createResponse({token, name: user.name}, 'user created successfully'));
 };
 
 //get all categories || can use query string
@@ -67,13 +67,14 @@ module.exports.updateUserById = async (req, res,next) => {
 };
 
 //login user
-module.exports.loginUser = async (req, res,next) => {
+module.exports.loginUser = async (req, res, next) => {
+
 	const [error,user] = await _p(userCrud.loginUser(req.body.userId));
 
 	if (error) {
-		console.log(error.red);
 		return next(new Error('user creation failed' ));
 	}
+
 	let token = '';
 	if (user) {
 		const payload = {
@@ -83,6 +84,8 @@ module.exports.loginUser = async (req, res,next) => {
 		};
 		token = await jwt.encode(payload);
 	}
+
+	console.log(user);
 	
-	return res.status(200).json(createResponse({token, ...user}, 'user login successfully'));
+	return res.status(200).json(createResponse({token, name: user.name}, 'user login successfully'));
 };

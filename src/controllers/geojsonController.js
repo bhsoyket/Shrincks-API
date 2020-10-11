@@ -17,20 +17,20 @@ module.exports.updateGeojson = async (req, res) => {
 		"type": "Feature",
 		"geometry": {
 		  "type": "Point",
-		  "coordinates": reqData.geometry.coordinates
+		  "coordinates": reqData.coordinates.split(',')
 		},
 		"properties": {
-		  "type": reqData.properties.type
+		  "type": reqData.type
 		}
 	  };
 
+	console.log(payload);
+	
 	axios.put(url, payload)
 		.then(function (response) {
-			// handle success
 			return res.status(200).json(createResponse(response.data, 'Feature created successfully'));
 		})
 		.catch(function (error) {
-			// handle error
 			console.log(error);
 			return res.status(200).json(createResponse(error, 'Feature not created'));
 		})
