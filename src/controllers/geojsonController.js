@@ -12,20 +12,19 @@ module.exports.updateGeojson = async (req, res) => {
 	const feature_id = short.generate();
 	const url = `https://api.mapbox.com/datasets/v1/mahmudz/ckfwri4uh18fm2bnu88vx35a0/features/${feature_id}?access_token=${token}`;
 	const config = { headers: {'Content-Type': 'application/json'} };
-	const payload = {
+	let points = reqData.coordinates.split(',');
+ 	const payload = {
 		"id": feature_id,
 		"type": "Feature",
 		"geometry": {
 		  "type": "Point",
-		  "coordinates": reqData.coordinates.split(',')
+		  "coordinates": points.reverse().map(p => parseFloat(p))
 		},
 		"properties": {
 		  "type": reqData.type
 		}
 	  };
 
-	console.log(payload);
-	
 	axios.put(url, payload)
 		.then(function (response) {
 			return res.status(200).json(createResponse(response.data, 'Feature created successfully'));
